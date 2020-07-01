@@ -1,2 +1,6 @@
 # ontarioPositiveCovid19Cases
-REST API access for daily reported data from the public health units on confirmed positive cases of COVID-19 in Ontario ( https://data.ontario.ca/dataset/confirmed-positive-cases-of-covid-19-in-ontario/resource/455fd63b-603d-4608-8216-7d8647f43350). If interested, there is already an available CKAN action API provided that grants direct access to the dataset. However, I found running complex queries to be a bit challenging using the CKAN API and decided to practice building my own freestanding REST API using the dataset provided instead. 
+REST API access for daily reported data from the public health units on confirmed positive cases of COVID-19 in Ontario 
+
+If interested, there is already an available CKAN action API provided that grants direct access to the dataset. However, I found running complex queries to be a bit challenging using the CKAN API and decided to practice building my own freestanding REST API using the dataset provided instead. 
+
+Data source -> https://data.ontario.ca/dataset/confirmed-positive-cases-of-covid-19-in-ontario/resource/455fd63b-603d-4608-8216-7d8647f43350

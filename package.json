@@ -1,0 +1,26 @@
+{
+  "name": "ontarioPositiveCovid19Cases",
+  "version": "1.0.0",
+  "description": "REST API access for daily reported data from the public health units on confirmed positive cases of COVID-19 in Ontario ( https://data.ontario.ca/dataset/confirmed-positive-cases-of-covid-19-in-ontario/resource/455fd63b-603d-4608-8216-7d8647f43350). If interested, there is already an available CKAN action API provided that grants direct access to the dataset. However, I found running complex queries to be a bit challenging using the CKAN API and decided to practice building my own freestanding REST API using the dataset provided instead.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbalaketheeswaran/ontarioPositiveCovid19Cases.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbalaketheeswaran/ontarioPositiveCovid19Cases/issues"
+  },
+  "homepage": "https://github.com/sbalaketheeswaran/ontarioPositiveCovid19Cases#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.20"
+  }
+}
