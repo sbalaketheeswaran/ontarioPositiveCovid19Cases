@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 var PublicHealthUnitSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -10,7 +10,7 @@ var PublicHealthUnitSchema = mongoose.Schema({
     PublicHealthUnit: String,
     City: String,
     Latitude: Number,
-    Longitude: Number,
-})
+    Longitude: Number
+});
 
-model.exports = PublicHealthUnit = mongoose.model("PublicHealthUnit", PublicHealthUnitSchema)
+module.exports = PublicHealthUnit = mongoose.model("PublicHealthUnit", PublicHealthUnitSchema)

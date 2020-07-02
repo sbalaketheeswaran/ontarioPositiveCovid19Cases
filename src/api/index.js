@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-//Use pagination to recursively loop through available api DB and collection all entires
+//Use pagination to recursively loop through available api database and aggregate all entires
 //@param: offset - used to ship all entries <= offset value
 //@returns: entire dataset for all available positive covid-19 cases in ontario
 
