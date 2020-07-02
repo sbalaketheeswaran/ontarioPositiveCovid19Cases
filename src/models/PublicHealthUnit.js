@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
 var PublicHealthUnitSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     Outcome: {
         Recovered: Number,
         NotResolved: Number,
