@@ -30,4 +30,4 @@ const PositiveCovidCaseSchema = mongoose.Schema({
     Reporting_PHU_Longitude: Number,
 })
 
-module.exports = PositiveCovidCaseEntry =  mongoose.model("PositiveCovidCaseEntry", PositiveCovidCaseSchema)
+module.exports = PositiveCovidCase =  mongoose.model("PositiveCovidCase", PositiveCovidCaseSchema)
