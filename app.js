@@ -6,8 +6,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors")
 
 //import routes and assign
-const healthUnitRoute = require('./src/routes/healthUnit')
-app.use("/healthUnit", healthUnitRoute);
+const PublicHealthUnit = require('./src/routes/PublicHealthUnit')
+app.use("/PublicHealthUnit", PublicHealthUnit);
 
 app.use(bodyParser.json());
 //Handle Middleware
