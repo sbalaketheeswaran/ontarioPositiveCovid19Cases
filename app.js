@@ -1,6 +1,11 @@
-require('./config/database');
+require('./config/database')
+
 const express = require("express");
 const app = express();
+
+const DataSync = require("./src/service/DataSync")
+
+DataSync.sync();
 
 const bodyParser = require("body-parser");
 const cors = require("cors")
