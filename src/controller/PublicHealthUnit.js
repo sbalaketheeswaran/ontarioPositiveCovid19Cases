@@ -8,7 +8,7 @@ exports.publicHealthUnits_get_all = (req, res) => {
                 count: entries.length,
                 result: entries.map(entry => {
                     return {
-                        id: entry.ObjectId,
+                        id: entry._id,
                         Outcome: {
                             Recovered: entry.Outcome.Recovered,
                             NotResolved: entry.Outcome.NotResolved,
@@ -39,7 +39,7 @@ exports.publicHealthUnits_get_all = (req, res) => {
 };
 
 exports.publicHealthUnit_get_by_id = (req, res) => {
-    const id = req.params.productId;
+    const id = req.params.publicHealthUnitId;
     PublicHealthUnit.findById(id)
         .then(entry => {
             if (entry) {
