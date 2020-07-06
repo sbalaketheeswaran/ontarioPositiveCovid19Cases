@@ -8,15 +8,15 @@ const DataSync = require("./src/service/DataSync")
 DataSync.sync();
 
 const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
+//Handle Middleware
 const cors = require("cors")
+app.use(cors());
 
 //import routes and assign
 const PublicHealthUnit = require('./src/routes/PublicHealthUnit')
 app.use("/PublicHealthUnit", PublicHealthUnit);
-
-app.use(bodyParser.json());
-//Handle Middleware
-app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
