@@ -8,7 +8,7 @@ exports.publicHealthUnits_get_all = (req, res) => {
                 count: entries.length,
                 result: entries.map(entry => {
                     return {
-                        id: entry.ObjectId,
+                        id: entry._id,
                         Outcome: {
                             Recovered: entry.Outcome.Recovered,
                             NotResolved: entry.Outcome.NotResolved,
