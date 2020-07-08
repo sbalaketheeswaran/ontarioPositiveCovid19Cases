@@ -14,9 +14,17 @@ app.use(bodyParser.json());
 const cors = require("cors")
 app.use(cors());
 
+app.get("", (req,res) =>{
+  res.send("Please use either /PublicHealthUnit, or /OntarioMetaCovidCase endpoints")
+})
+
+
 //import routes and assign
 const PublicHealthUnit = require('./src/routes/PublicHealthUnit')
 app.use("/PublicHealthUnit", PublicHealthUnit);
+
+const OntarioMetaCovidCase = require('./src/routes/OntarioMetaCovidCase')
+app.use("/OntarioMetaCovidCase", OntarioMetaCovidCase);
 
 const PORT = process.env.PORT || 3000;
 
