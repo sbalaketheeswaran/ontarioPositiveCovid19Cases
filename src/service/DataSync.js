@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const PositiveCovidCase = require("../models/PositiveCovidCase")
 const PublicHealthUnit = require("../models/PublicHealthUnit")
+const OntarioMetaCovidCase = require("../models/OntarioMetaCovidCase")
 const api = require("../api")
 
 const dropPreviousCollections = async (collectionName) => {
@@ -64,7 +65,7 @@ const syncWithExternalData = async () => {
     }
 }
 
-const populateCollections = async () => {
+const populatePublicHealthUnitCollection = async () => {
     let distinctEntries = await PositiveCovidCase.distinct('Reporting_PHU', (err, result) => {
         if (err) {
             console.log(err)
@@ -124,9 +125,47 @@ const populateCollections = async () => {
     }
 };
 
+const populateOntarioMetaCollection = async () => {
+
+
+    let recovered = await PositiveCovidCase.countDocuments({
+        "Outcome1": "Resolved"
+    }, (err, resolved) => {
+        return resolved
+    });
+
+    let notResolved = await PositiveCovidCase.countDocuments({
+        "Outcome1": "Not Resolved"
+    }, (err, notResolved) => {
+        return notResolved
+    });
+
+    let fatal = await PositiveCovidCase.countDocuments({
+        "Outcome1": "Fatal"
+    }, (err, fatal) => {
+        return fatal
+    });
+
+    let OntarioMetaCovidCaseEntry = new OntarioMetaCovidCase({
+        Province: "Ontario",
+        Recovered: recovered,
+        NotResolved: notResolved,
+        Fatal: fatal,
+        Total : recovered + notResolved + fatal
+    })
+
+    try {
+        OntarioMetaCovidCaseEntry.save();
+    } catch (error) {
+        console.log("Failed to save entry at: " + OntarioMetaCovidCaseEntry.Province)
+    }
+};
+
 exports.sync = async () => {
     await dropPreviousCollections('positivecovidcases');
     await syncWithExternalData();
     await dropPreviousCollections('publichealthunits');
-    await populateCollections();
+    await populatePublicHealthUnitCollection();
+    await dropPreviousCollections('ontariometacovidcases');
+    await populateOntarioMetaCollection();
 };
