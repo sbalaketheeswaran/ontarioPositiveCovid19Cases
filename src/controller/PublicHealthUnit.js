@@ -10,6 +10,7 @@ exports.publicHealthUnits_get_all = (req, res) => {
                     return {
                         id: entry._id,
                         Outcome: {
+                            Total: entry.Outcome.Total,
                             Recovered: entry.Outcome.Recovered,
                             NotResolved: entry.Outcome.NotResolved,
                             Fatal: entry.Outcome.Fatal
