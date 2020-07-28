@@ -5,7 +5,9 @@ const app = express();
 
 const DataSync = require("./src/service/DataSync")
 
-DataSync.sync();
+//Using node-schedule to have a routine data sync job run at noon daily
+const schedule = require('node-schedule');
+schedule.scheduleJob('00 12 * * *', DataSync.sync);
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());

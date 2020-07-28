@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const PositiveCovidCase = require("../models/PositiveCovidCase")
 const PublicHealthUnit = require("../models/PublicHealthUnit")
 const OntarioMetaCovidCase = require("../models/OntarioMetaCovidCase")
+const DataSynchronizationLog = require("../models/DataSynchronizedLog")
 const api = require("../api")
 
 const dropPreviousCollections = async (collectionName) => {
@@ -166,6 +167,15 @@ const populateOntarioMetaCollection = async () => {
     }
 };
 
+const appendToDataSyncLog = async () => {
+    let date = Date.now();
+    let dataSynchronizationLog = new DataSynchronizationLog({
+        SyncTime: date
+    })
+    
+    dataSynchronizationLog.save();
+}
+
 exports.sync = async () => {
     await dropPreviousCollections('positivecovidcases');
     await syncWithExternalData();
@@ -173,4 +183,5 @@ exports.sync = async () => {
     await populatePublicHealthUnitCollection();
     await dropPreviousCollections('ontariometacovidcases');
     await populateOntarioMetaCollection();
+    await appendToDataSyncLog();
 };
