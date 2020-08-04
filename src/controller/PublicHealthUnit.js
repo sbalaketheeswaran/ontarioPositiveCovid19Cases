@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 const PublicHealthUnit = require("../models/PublicHealthUnit")
+const DataSynchronizedLog = require("../models/DataSynchronizedLog")
 
-exports.publicHealthUnits_get_all = (req, res) => {
+exports.publicHealthUnits_get_all = async (req, res) => {
+    let lastSynchedDate = await DataSynchronizedLog.getLastSyncDate()
     PublicHealthUnit.find()
         .then(entries => {
             const response = {
                 count: entries.length,
+                lastSynced: lastSynchedDate,
                 result: entries.map(entry => {
                     return {
                         id: entry._id,
                         Outcome: {
+                            Total: entry.Outcome.Total,
                             Recovered: entry.Outcome.Recovered,
                             NotResolved: entry.Outcome.NotResolved,
                             Fatal: entry.Outcome.Fatal

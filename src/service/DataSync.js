@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const PositiveCovidCase = require("../models/PositiveCovidCase")
 const PublicHealthUnit = require("../models/PublicHealthUnit")
 const OntarioMetaCovidCase = require("../models/OntarioMetaCovidCase")
+const DataSynchronizationLog = require("../models/DataSynchronizedLog")
 const api = require("../api")
 
 const dropPreviousCollections = async (collectionName) => {
@@ -85,27 +86,34 @@ const populatePublicHealthUnitCollection = async () => {
             return publicHealthUnitFields
         });
 
+        let recovered = await PositiveCovidCase.countDocuments({
+            "Reporting_PHU": publicHealthUnit,
+            "Outcome1": "Resolved"
+        }, (err, resolved) => {
+            return resolved
+        })
+
+        let notResolved = await PositiveCovidCase.countDocuments({
+            "Reporting_PHU": publicHealthUnit,
+            "Outcome1": "Not Resolved"
+        }, (err, notResolved) => {
+            return notResolved
+        })
+
+        let fatal = await PositiveCovidCase.countDocuments({
+            "Reporting_PHU": publicHealthUnit,
+            "Outcome1": "Fatal"
+        }, (err, fatal) => {
+            return fatal
+        });
+
         let publicHealthUnitEntry = new PublicHealthUnit({
             _id: new mongoose.Types.ObjectId(),
             Outcome: {
-                Recovered: await PositiveCovidCase.countDocuments({
-                    "Reporting_PHU": publicHealthUnit,
-                    "Outcome1": "Resolved"
-                }, (err, resolved) => {
-                    return resolved
-                }),
-                NotResolved: await PositiveCovidCase.countDocuments({
-                    "Reporting_PHU": publicHealthUnit,
-                    "Outcome1": "Not Resolved"
-                }, (err, notResolved) => {
-                    return notResolved
-                }),
-                Fatal: await PositiveCovidCase.countDocuments({
-                    "Reporting_PHU": publicHealthUnit,
-                    "Outcome1": "Fatal"
-                }, (err, fatal) => {
-                    return fatal
-                })
+                Total: (recovered + notResolved + fatal),
+                Recovered: recovered,
+                NotResolved: notResolved,
+                Fatal: fatal
             },
             PublicHealthUnit: source.Reporting_PHU,
             City: source.Reporting_PHU_City,
@@ -126,8 +134,6 @@ const populatePublicHealthUnitCollection = async () => {
 };
 
 const populateOntarioMetaCollection = async () => {
-
-
     let recovered = await PositiveCovidCase.countDocuments({
         "Outcome1": "Resolved"
     }, (err, resolved) => {
@@ -161,6 +167,15 @@ const populateOntarioMetaCollection = async () => {
     }
 };
 
+const appendToDataSyncLog = async () => {
+    let date = Date.now();
+    let dataSynchronizationLog = new DataSynchronizationLog({
+        SyncTime: date
+    })
+    
+    dataSynchronizationLog.save();
+}
+
 exports.sync = async () => {
     await dropPreviousCollections('positivecovidcases');
     await syncWithExternalData();
@@ -168,4 +183,5 @@ exports.sync = async () => {
     await populatePublicHealthUnitCollection();
     await dropPreviousCollections('ontariometacovidcases');
     await populateOntarioMetaCollection();
+    await appendToDataSyncLog();
 };
