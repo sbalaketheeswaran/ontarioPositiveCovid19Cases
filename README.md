@@ -11,7 +11,7 @@ https://covid-19-in-ontario-rest-api.herokuapp.com/PublicHealthUnit
 
 or 
 
-https://covid-19-in-ontario-rest-api.herokuapp.com/PublicHealthUnit/{ID}
+https://covid-19-in-ontario-rest-api.herokuapp.com/PublicHealthUnit/{id}
 
 
 
