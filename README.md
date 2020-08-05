@@ -5,8 +5,13 @@ Available endpoints:
 
 https://covid-19-in-ontario-rest-api.herokuapp.com/OntarioMetaCovidCase
 
-https://covid-19-in-ontario-rest-api.herokuapp.com/PublicHealthUnit (/{id} will give specific public heat unit)
+& 
 
+https://covid-19-in-ontario-rest-api.herokuapp.com/PublicHealthUnit 
+
+or 
+
+https://covid-19-in-ontario-rest-api.herokuapp.com/PublicHealthUnit/{ID}
 
 
 
