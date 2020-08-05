@@ -10,7 +10,8 @@ const getLastSyncDate = async function (){
             return new Error('Error querying DataSynchronizedLog for last synced date');
         }
         if (date) {
-            return new Date(date[0].SyncTime);
+            let syncDateTime = new Date(date[0].SyncTime);
+            return syncDateTime.toString();
         }
     })
 
