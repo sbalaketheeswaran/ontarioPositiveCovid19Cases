@@ -5,7 +5,7 @@ const axios = require('axios');
 //@returns: entire dataset for all available positive covid-19 cases in ontario
 
 //Note: the execution of this function will be greater than 60 seconds to complete
-const fetchEntireDataset = async function (offset) {
+const fetchEntireDataset = async function (offset, IncrementalAdd) {
 
     const limit = 100; //manage load by limiting the transfer of entries to batches of 100
 
@@ -18,7 +18,8 @@ const fetchEntireDataset = async function (offset) {
         console.log("Retrieving data from API for offset : " + offset);
 
         if (data.result.records.length > 0) {
-            return data.result.records.concat(await fetchEntireDataset(offset + 100));
+            IncrementalAdd(data.result.records)
+            return await fetchEntireDataset(offset + 100, IncrementalAdd);
         } else {
             return data.result.records;
         }

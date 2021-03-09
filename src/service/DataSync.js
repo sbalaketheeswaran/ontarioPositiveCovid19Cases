@@ -24,12 +24,9 @@ const dropPreviousCollections = async (collectionName) => {
     return result;
 }
 
-const syncWithExternalData = async () => {
-    //pull dataset from external api
-    const offset = 0;
-    let positiveCovidCases = await api.fetchEntireDataset(offset);
+function IncrementalAdd(entryTable){
 
-    positiveCovidCases.map(record => {
+    entryTable.map(record => {
         let positiveCovidCaseEntry = new PositiveCovidCase({
             _id: record._id,
             Row_ID: record.Row_ID,
@@ -56,6 +53,14 @@ const syncWithExternalData = async () => {
             console.log("Failed to save entry at: " + positiveCovidCaseEntry._id)
         }
     });
+}
+
+const syncWithExternalData = async () => {
+    //pull dataset from external api
+    const offset = 0;
+    let positiveCovidCases = await api.fetchEntireDataset(offset, IncrementalAdd);
+
+    IncrementalAdd(positiveCovidCases);
 
     let numberOfStoredEntries = await PositiveCovidCase.countDocuments({}, (err, numberOfStoredEntries) => {
         return numberOfStoredEntries
